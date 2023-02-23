@@ -1,25 +1,27 @@
 # gis-pms-front
 
-## Project setup
+## NPM 설치.
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 프로젝트 구동
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 배포 시 빌드
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### 모름.
 ```
 npm run lint
-```
-test
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
 
+
+## 규칙
+>  1. 반 자유.
+>  2. 코드 리뷰 필요할 시 요청.
+>  3. 브런치 규칙
+>    - {부모 브런치}_{본인 표시 아무거나.}_{dev : 본인 개발용 / qc : 검수용 / side : 사이드 용. }

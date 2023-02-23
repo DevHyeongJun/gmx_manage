@@ -1,0 +1,40 @@
+* {
+    padding:0;
+    margin : 0;
+}
+
+html, body {
+    height:100%;
+    width:100%;
+}
+
+
+:root {
+ --main-bg-color: #3CB371;
+ --main-un-active-color: #a7a7a7;
+ --main-un-active-hover-color: #999;
+ --main-active-hover-color: #1da75b;
+ --main-font-color : #fff;
+}
+
+/* 컴포넌트로 뺄거에요. 쓰지마세요. 제발 */
+button {
+    cursor: pointer; background: inherit; border:none ;padding:0; margin:0
+}
+button.gmx_btn { 
+    border-radius: 5px;
+}
+button.btn_main {
+    
+    background-color: var(--main-bg-color) ;
+}
+button.btn_main:hover {
+    background-color: var(--main-active-hover-color) ;
+}
+button.btn_gray {
+    background-color: var(--main-un-active-color) ;
+}
+button.btn_gray:hover {
+    background-color: var(--main-un-active-hover-color) ;
+}
+/* 컴포넌트로 뺄거에요. 쓰지마세요. 제발 --- */

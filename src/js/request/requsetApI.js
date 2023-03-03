@@ -1,50 +1,37 @@
 import axios from 'axios';
 
-const ROOT_REQUEST_URL = "test";
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.withCredentials = true;
 
 const Request = (url, opt, _callBack) => {
+    opt.param['token']= 'ㅅㄷㄴㅅ';
     axios({
         method: opt.method||"get",
         url: url,
-        data:opt.param,
-        responseType: "json"
+        headers: { 'Access-Control-Allow-Origin': '*', "Content-Type": 'application/json' },
+        params:opt.param,
+        responseType : 'json'
     }).then(function (response) {
         _callBack(response);
     });
 }
+//노원구 드론 반출 시스템
 export const RequestAPI = {
-    
-    getCount : (param, callBack) => {
-        ROOT_REQUEST_URL;
-        Request;
-        param;
-
-        const rand_0_100 = Math.floor(Math.random() * 101);
-
-        callBack({ result : rand_0_100 });
-        
-        // Request(`${process.env.VUE_APP_REQUEST_URL}/getCount`, { param, method:'post'}, (res) => {
-        //     callBack(res.data);
-        // });
-    },
-
-    getStat : (param, callBack) => {
-        param;
-        const rand_0_100 = Math.floor(Math.random() * 2);
-        callBack({ result : rand_0_100 > 0 });
-        
-        // Request(`${process.env.VUE_APP_REQUEST_URL}/getStat`, { param, method:'post'}, (res) => {
-        //     callBack(res.data);
-        // });
-    },
-
     setServiceCmd : (param, callBack) => {
-        param;
-        const rand_0_100 = Math.floor(Math.random() * 2);
-        callBack({ result : rand_0_100 > 0 });
-        
-        // Request(`${process.env.VUE_APP_REQUEST_URL}/getStat`, { param, method:'post'}, (res) => {
-        //     callBack(res.data);
-        // });
+        Request(`${process.env.VUE_APP_REQUEST_URL}/manager/workExportMoule`, { param, method:'get'}, (res) => {
+            callBack(res.message);
+        });
     },
+    
+    getCrmsList : (param, callBack) => {
+        Request(`${process.env.VUE_APP_REQUEST_URL}/manager/select`, { param, method:'get'}, (res) => {
+            
+            callBack(res.data.results);
+        });
+    },
+    getMonitor : (param, callBack) => {
+        Request(`${process.env.VUE_APP_REQUEST_URL}/manager/monitor`, { param, method:'get'}, (res) => {
+            callBack(res.data.results);
+        });
+    }
 }

@@ -26,11 +26,12 @@ export default {
     },
 
     mounted() {
+        console.log(this.$store.getters['monitor/getAllData'])
     },
 };
 </script>
 
 <style scoped> /* 이 파일에만 적용되는 스타일 */
-
-
+    .wrap { height:100%}
+    .main {height:calc(100% - 68px); display: flex; flex-direction: column; padding:10px;}
 </style>

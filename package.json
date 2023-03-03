@@ -18,6 +18,7 @@
     "sass-loader": "^13.2.0",
     "vant": "^3.6.5",
     "vue": "^3.2.13",
+    "vue-axios-cors": "^1.0.1",
     "vue3-openlayers": "^0.1.70",
     "vuex": "^4.0.2"
   },

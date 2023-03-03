@@ -12,8 +12,8 @@
                 </p>
             </div>
             <div class="btn_group">
-                <button class="gmx_btn btn_main" @click="startHandle">시작</button>
-                <button class="gmx_btn btn_gray" @click="startHandle">종료</button>
+                <button class="gmx_btn btn_main" v-on:click="setServiceCmd('1')">시작</button>
+                <button class="gmx_btn btn_gray" v-on:click="setServiceCmd('2')">종료</button>
             </div>
         </GmxContainer>
     </div>
@@ -46,7 +46,7 @@ export default {
     },
     mounted() {
       this.getStat();
-      setInterval(this.getStat, 5000);
+      //setInterval(this.getStat, 5000);
     },
 
     methods: {
@@ -58,22 +58,23 @@ export default {
                 key : this.svc
             }
             
-            RequestAPI.getStat(param, (json) => {
+            RequestAPI.getMonitor(param, (json) => {
                 
-                const { result } = json;
+                const { results } = json;
                 
-                this.stat = result;
+                this.stat = results;
             });
         },
 
         /**
          * 서비스 명령어를 전달한다.
          */
-        setServiceCmd() {
-            const param = {
-                key : this.svc
+        setServiceCmd(action) {
+            const param  = {
+                type : this.svc,
+                action
             }
-            
+
             RequestAPI.setServiceCmd(param, (json) => {
                 console.log(json);
             });

@@ -1,12 +1,9 @@
 import { createStore } from 'vuex';
-import map from './modules/map';
-import search from './modules/search';
-
-
+import monitor from './modules/monitor';
 
 const store = createStore({
   modules: {
-    map, search
+    monitor
   }
 })
 

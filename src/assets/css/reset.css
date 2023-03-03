@@ -22,10 +22,11 @@ button {
     cursor: pointer; background: inherit; border:none ;padding:0; margin:0
 }
 button.gmx_btn { 
+    padding: 10px;
     border-radius: 5px;
 }
 button.btn_main {
-    
+    color:var(--main-font-color);
     background-color: var(--main-bg-color) ;
 }
 button.btn_main:hover {
@@ -38,3 +39,7 @@ button.btn_gray:hover {
     background-color: var(--main-un-active-hover-color) ;
 }
 /* 컴포넌트로 뺄거에요. 쓰지마세요. 제발 --- */
+
+.align_left {
+    text-align: left !important;
+}

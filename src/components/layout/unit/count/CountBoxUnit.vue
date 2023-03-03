@@ -21,7 +21,6 @@
 <script>
 
 import GmxContainer from '@/components/gmx/container/GmxContainer.vue';
-import {RequestAPI} from '@/js/request/requsetApI.js';
 
 /**
  * svc 정보로 반출 카운트 값으로 리턴한다.
@@ -34,27 +33,6 @@ import {RequestAPI} from '@/js/request/requsetApI.js';
  *  - 4 : 재 암호화 중
  *  - 5 : 재 암호화 실패
  */
-const getSvcCode = () => {
-
-    let svcName = "";
-
-    // switch(svc) {
-    //     case 0 :
-    //         break;
-    //     case 1 :
-    //         break;
-    //     case 2 :
-    //         break;
-    //     case 3 :
-    //         break;
-    //     case 4 :
-    //         break;
-    //     case 5 :
-    //         break;
-    // }
-
-    return svcName;
-}
 
 export default {
 
@@ -81,34 +59,9 @@ export default {
         }
     },
     mounted() {
-
-      this.getCount();
-      setInterval(this.getCount, 5000);
-
+        
     },
-    methods: {
-        /**
-         * 카운트를 가져온다.
-         */
-        getCount() {
-            const param = {
-                key : getSvcCode(this.svc)
-            }
-            
-            RequestAPI.getCount(param, (json) => {
-                console.log(this.svc);
-                const { result } = json;
-                //테스트 코드
-                if ( this.svc == 1 || this.svc == 3 ) {
 
-                    this.count = 0;
-
-                } else {
-                    this.count = result;
-                }
-            });
-        },
-    }
 };
 </script>
 

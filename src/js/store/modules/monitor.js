@@ -6,12 +6,11 @@ export default {
     // 실제로 취급해야하는 각각의 data(==data)
     state: () => ({
       data: {},
-      test: '123'
     }),
 
     // 계산된 상태를 만들어내는 개념(==computed)
     getters: {
-        getAllData(state) {
+        getMonitor(state) {
             return state.data;
         },
     },

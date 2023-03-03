@@ -11,22 +11,13 @@
 <script>
 
 export default {
-
-    name: 'GmxContainer',
     props:{
         isScroll : {
             type: Boolean,
             default : false
         },
     },
-    components: {
-    },
-    data() {
-
-    },
-    mounted() {
-        console.log(this.$refs)
-    },
+      
 };
 </script>
 

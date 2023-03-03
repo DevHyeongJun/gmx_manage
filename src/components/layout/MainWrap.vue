@@ -13,21 +13,29 @@
 
 <script>
 
+import {computed} from 'vue';
+
 import TopMenu from '@/components/layout/menu/TopMenu.vue';
 import MonitorPage from '@/components/layout/page/MonitorPage.vue';
 
+const useMonitor = () => {
+    const test = computed(()=>{ return ''});
+
+    return test;
+}
+
 export default {
-    name: 'MainWrap',
-    components: {
+
+    components: { 
         TopMenu,
         MonitorPage
-    },
-    data() {
-    },
+     },
 
-    mounted() {
-        console.log(this.$store.getters['monitor/getAllData'])
-    },
+    setup() {
+        return {
+            useMonitor
+        }
+    }
 };
 </script>
 

@@ -14,11 +14,77 @@
 
 <script>
 
+import {ref} from 'vue';
 import GmxContainer from '@/components/gmx/container/GmxContainer.vue';
 import GmxCardList from '@/components/gmx/list/GmxCardList.vue';
 import {RequestAPI} from '@/js/request/requsetApI.js';
 
+const getCrmsList = (svc, items) => {
+
+    const param = {
+        key : svc
+    }
+
+    RequestAPI.getCrmsList(param, (result) => {
+        
+        items.value = [];
+        for ( let index in result ) {
+            
+            const item = result[index];
+            items.value.push([
+            {
+                k : 'rqstkey'
+                , v : item.rqstkey
+                , class : ''
+                , width : '15%'
+            },
+            {
+                k : 'workkey'
+                , v : item.workkey
+                , class : ''
+                , width : '15%'
+            },
+            {
+                k : 'cctvNm'
+                , v : item.cctvNm
+                , class : ''
+                , width : '60%'
+            },
+            {
+                k : 'ownerid'
+                , v : item.ownerid
+                , class : ''
+                , width : '10%'
+            },
+            {
+                k : 'btn'
+                , v : '재반출'
+                , width : '15%'
+                , button : {
+                    onClick : () =>{
+                        modData(item.rqstkey, item.avikey, item.workkey, svc, items);
+                    }
+                }
+            }]);
+        }
+        
+    });
+
+    return items;
+    
+};
+
+
+const modData = (rqstKey, aviKey, workKey, type, items) => {
+    RequestAPI.modData({rqstKey, aviKey, workKey, type}, (result) => {
+        if ( result === "1") {
+            getCrmsList(type, items);
+        }
+    });
+}
+
 export default {
+    
     props:{
         title : {
             type: String,
@@ -29,76 +95,23 @@ export default {
             required: true,
         }
     },
+
     components: {
         GmxContainer,
-            GmxCardList,
+        GmxCardList,
     },
     
-    data() {
+    setup(props){
+
+        let items = ref([]);
+        getCrmsList(props.svc, items);
+        // setInterval(() => {
+        //    getCrmsList(props.svc, items);
+        // }, 5000);
+        
         return {
-            stat : true,
-            items : [],
+            items
         }
-    },
-
-    mounted() {
-      this.getCrmsList();
-   //   setInterval(this.getCrmsList, 5000);
-    },
-
-    methods: {
-        /**
-         * 서비스 상태 정보를 가져온다.
-         */
-         getCrmsList() {
-
-            const param = {
-                key : this.svc
-            }
-            
-            RequestAPI.getCrmsList(param, (result) => {
-                
-                const list = [];
-                
-                for ( const index in result ) {
-                    
-                    const item = result[index];
-                    list.push([
-                    {
-                        k : 'rqstkey'
-                        , v : item.rqstkey
-                        , class : ''
-                        , width : '15%'
-                    },
-                    {
-                        k : 'cctvlist'
-                        , v : item.cctvlist
-                        , class : ''
-                        , width : '60%'
-                    },
-                    {
-                        k : 'ownerid'
-                        , v : item.ownerid
-                        , class : ''
-                        , width : '10%'
-                    },
-                    {
-                        k : 'btn'
-                        , v : '재반출'
-                        , width : '15%'
-                        , button : {
-                            onClick : () =>{
-                                alert(item.rqstkey + '*' + item.avikey);
-                                alert(this.svc);
-                            }
-
-                        }
-                    }]);
-                }
-                this.items = list;
-            });
-        },
-
     }
 };
 
@@ -117,10 +130,11 @@ export default {
     height:calc(100% - 64px);
 }
 
-    .title {
-        height:30px;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #e6e6e6;
-       padding-bottom: 10px;
-    }
+.title {
+    height:30px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 10px;
+}
+
 </style>

@@ -5,22 +5,22 @@
         <!-- RestartGroup -->
         <div class="package_wrap">
             <!-- 반출 컨테이너 -->
-            <PackageUnit svc="B" title="반출 서비스"></PackageUnit>
+            <PackageUnit svc="B" :state="data.export" :getState="getServiceStat" title="반출 서비스"></PackageUnit>
             <!-- 암호화 컨테이너 -->
-            <PackageUnit svc="E"  title="암호화 서비스"></PackageUnit>
+            <PackageUnit svc="E" :state="data.encrypt" :getState="getServiceStat" title="암호화 서비스"></PackageUnit>
             <!-- 재암호화 컨테이너 -->
-            <PackageUnit svc="R"  title="재암호화 서비스"></PackageUnit>
+            <PackageUnit svc="R" :state="data.repackage" :getState="getServiceStat" title="재암호화 서비스"></PackageUnit>
         </div>
         <!-- CountGroup -->
         <div class="countbox_wrap">
             <!-- 반출 중 -->
-            <CountBoxUnit svc="0" title="반출 중"></CountBoxUnit>
+            <CountBoxUnit svc="export" title="반출 중"></CountBoxUnit>
             <!-- 처리 실패 -->
-            <CountBoxUnit svc="1"  title="처리 실패"></CountBoxUnit>
+            <CountBoxUnit svc="exportfail"  title="반출 실패"></CountBoxUnit>
             <!-- 암호화 중 -->
-            <CountBoxUnit svc="2"  title="암호화 중"></CountBoxUnit>
+            <CountBoxUnit svc="encrypt"  title="암호화 중"></CountBoxUnit>
             <!-- 암호화 실패 -->
-            <CountBoxUnit svc="3"  title="암호화 실패"></CountBoxUnit>
+            <CountBoxUnit svc="encryptfail"  title="암호화 실패"></CountBoxUnit>
             <!-- 재 암호화 중
             <CountBoxUnit svc="4"  title="재 암호화 중"></CountBoxUnit> -->
             <!-- 재 암호화 실패
@@ -35,16 +35,15 @@
     </div>
     <div class="list_wrap">
         <div>
-
             <div>
-                <CrmsListUnit svc="0" title="백업 중"></CrmsListUnit>
-                <CrmsListUnit svc="1" title="백업 실패"></CrmsListUnit>
+                <CrmsListUnit svc="0" title="반출 중"></CrmsListUnit>
+                <CrmsListUnit svc="1" title="반출 실패"></CrmsListUnit>
             </div>
         </div>
         <div>
             <div>
-                <CrmsListUnit svc="3" title="암호화 중"></CrmsListUnit>
-                <CrmsListUnit svc="4" title="암호화 실패"></CrmsListUnit>
+                <CrmsListUnit svc="2" title="암호화 중"></CrmsListUnit>
+                <CrmsListUnit svc="3" title="암호화 실패"></CrmsListUnit>
             </div>
         </div>
     </div>
@@ -52,22 +51,52 @@
 </template>
 
 <script>
-
+import { reactive } from "vue";
 import PackageUnit from '@/components/layout/unit/package/PackageUnit.vue';
 import CountBoxUnit from '@/components/layout/unit/count/CountBoxUnit.vue';
 import CrmsListUnit from '@/components/layout/unit/list/CrmsListUnit.vue';
+import {RequestAPI} from '@/js/request/requsetApI.js';
+
+
+const _getServiceStat = (data) => {
+
+    RequestAPI.getServiceStat({}, (result) => {
+        const resultData = result.split(';');
+        data.export = resultData[0] === 'true';
+        data.encrypt = resultData[1] === 'true';
+        data.repackage = resultData[2] === 'true';
+
+    });
+
+    return data;
+};
+
 
 export default {
-    name: 'MonitorPage',
-    components: {
+    components: { 
         PackageUnit,
         CountBoxUnit,
         CrmsListUnit
     },
-    data() {
 
-    },
-    mounted() {
+    setup() {
+        const data = reactive({
+            export : false,
+            encrypt : false,
+            repackage : false
+        });
+
+        const getServiceStat = () =>{
+            _getServiceStat(data);
+        }
+        
+        getServiceStat();
+        setInterval(()=>{getServiceStat();}, 5000);
+        
+        return {
+            data,
+            getServiceStat
+        }
     },
 };
 </script>

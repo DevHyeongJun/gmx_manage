@@ -17,8 +17,8 @@ export default {
             default : false
         },
     },
-      
 };
+
 </script>
 
 <style scoped> /* 이 파일에만 적용되는 스타일 */

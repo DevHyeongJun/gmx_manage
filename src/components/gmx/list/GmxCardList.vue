@@ -11,6 +11,9 @@
                     <span v-else>{{ data.v }}</span>
                 </div>
         </div>
+        <p v-if="items.length === 0" class="empty_text">
+            <span>데이터가 존재하지 않습니다.</span>
+        </p>
     </div>
 </template>
 <script>
@@ -20,6 +23,7 @@ import {computed} from 'vue';
 
 export default {
     props: {
+        
         svc : String,  
         keyCol : String,
         items: Array
@@ -52,5 +56,14 @@ export default {
     .gmx_card_list > div:hover {
         color:var(--main-bg-color);
         font-weight: bold;
+    }
+
+    .empty_text {
+        padding-top: 10%;
+        text-align: center;
+    }
+    .empty_text span {
+        color:#999;
+        
     }
 </style>

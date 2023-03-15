@@ -19,7 +19,7 @@ const Request = (url, opt, _callBack) => {
 export const RequestAPI = {
     setServiceCmd : (param, callBack) => {
         Request(`${process.env.VUE_APP_REQUEST_URL}/manager/workExportMoule`, { param, method:'get'}, (res) => {
-            callBack(res.message);
+            callBack(res.data.message);
         });
     },
     
@@ -29,9 +29,21 @@ export const RequestAPI = {
             callBack(res.data.results);
         });
     },
-    getMonitor : (param, callBack) => {
-        Request(`${process.env.VUE_APP_REQUEST_URL}/manager/monitor`, { param, method:'get'}, (res) => {
+    getMonitorCnt : (param, callBack) => {
+        Request(`${process.env.VUE_APP_REQUEST_URL}/manager/selectMonitorCnt`, { param, method:'get'}, (res) => {
             callBack(res.data.results);
         });
+    },
+    getServiceStat : (param, callBack) => {
+        Request(`${process.env.VUE_APP_REQUEST_URL}/manager/stateAll`, { param, method:'get'}, (res) => {
+            callBack(res.data.message);
+        });
+    },
+    
+    modData : (param, callBack) => {
+        Request(`${process.env.VUE_APP_REQUEST_URL}/manager/modData`, { param, method:'get'}, (res) => {
+            callBack(res.data.message);
+        });
     }
+
 }

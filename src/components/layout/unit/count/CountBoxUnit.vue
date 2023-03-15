@@ -19,7 +19,8 @@
     </div>
 </template>
 <script>
-
+import { computed } from "vue";
+import { useStore } from "vuex";
 import GmxContainer from '@/components/gmx/container/GmxContainer.vue';
 
 /**
@@ -36,8 +37,6 @@ import GmxContainer from '@/components/gmx/container/GmxContainer.vue';
 
 export default {
 
-    name: 'CountBoxUnit',
-
     props:{
         title : {
             type: String,
@@ -53,15 +52,15 @@ export default {
         GmxContainer
     },
 
-    data() {
-        return {
-            count : 0
-        }
-    },
-    mounted() {
-        
-    },
+    setup(props) {
+       const store = useStore();
+       const count = computed(() => store.getters['monitor/getMonitorCount'][props.svc]||0);
 
+       return {
+            count
+       }
+    },
+    
 };
 </script>
 

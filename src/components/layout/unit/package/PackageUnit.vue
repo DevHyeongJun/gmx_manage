@@ -8,12 +8,12 @@
                     <strong>
                         {{title}}
                     </strong>
-                    <span class="stat_unit" :class="[stat ? 'svc_on': 'svc_off']"></span>
+                    <span class="stat_unit" :class="[state ? 'svc_on': 'svc_off']"></span>
                 </p>
             </div>
             <div class="btn_group">
-                <button class="gmx_btn btn_main" v-on:click="setServiceCmd('1')">시작</button>
-                <button class="gmx_btn btn_gray" v-on:click="setServiceCmd('2')">종료</button>
+                <button class="gmx_btn btn_main" v-on:click="setServiceCmd('1', svc)">시작</button>
+                <button class="gmx_btn btn_gray" v-on:click="setServiceCmd('2', svc)">종료</button>
             </div>
         </GmxContainer>
     </div>
@@ -31,55 +31,44 @@ export default {
             type: String,
             default : ''
         },
+        state : {
+            type: Boolean,
+            default : false
+        },
         svc : {
             type: String, 
             required: true,
+        },
+        getState : {
+            type: Function,
         }
     },
     components: {
         GmxContainer
     },
-    data() {
-        return {
-            stat : true
-        }
-    },
-    mounted() {
-      this.getStat();
-      //setInterval(this.getStat, 5000);
-    },
 
-    methods: {
-        /**
-         * 서비스 상태 정보를 가져온다.
-         */
-         getStat() {
-            const param = {
-                key : this.svc
-            }
+    setup(props) {
+                
+        const setServiceCmd = (action) => {
             
-            RequestAPI.getMonitor(param, (json) => {
-                
-                const { results } = json;
-                
-                this.stat = results;
-            });
-        },
-
-        /**
-         * 서비스 명령어를 전달한다.
-         */
-        setServiceCmd(action) {
             const param  = {
-                type : this.svc,
+                type : props.svc,
                 action
             }
 
             RequestAPI.setServiceCmd(param, (json) => {
-                console.log(json);
+                if ( json === 'true' ) {
+                    
+                    props.getState();
+                    console.log('123');
+                }
             });
         }
-    }
+
+        return {
+            setServiceCmd
+        }
+    },
 };
 </script>
 
@@ -105,7 +94,6 @@ export default {
     .stat_unit.svc_off { 
         background-color: #777;
     }
-
     .btn_group {
         display: flex;
         margin-top: 30px;
